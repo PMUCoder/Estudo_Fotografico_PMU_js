@@ -1,0 +1,63 @@
+@mixin footerHeader {
+    color: $color_white;
+}
+
+footer {
+    display: flex;
+    font-family:'Roboto', sans-serif;
+    font-size: 2rem;
+    text-align: justify;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    justify-content: space-evenly;  
+    color:$color_gray;
+
+    .containerFooterEnlacesHeader {
+        @include footerHeader;
+        padding-bottom: 0.5rem;
+    }
+
+    .containerFooterEnlaces__itemActivo {
+        font-weight: bold;
+    }
+
+    .containerFooterEnlaces__list li a {
+        color: $color_gray;
+        transition: color 0.3s;
+        list-style: none;
+        text-decoration: none;
+
+        &:hover {
+            color: $color_white;
+        }
+    }
+
+    .containerFooterSocialHeader {
+        @include footerHeader;
+    }
+    
+    .socialMediaIconsCont {
+        padding-top: 2rem;
+    }
+    
+    .socialMediaIconsCont a {
+        color:$color_gray;
+        padding-right: 1rem;
+        transition: color 0.3s;
+        list-style: none;
+        text-decoration: none;
+    
+        &:hover {
+            color: $color_white;
+        }
+    }
+
+}
+
+@media (max-width:1000px) {
+
+    .containerFooterEnlaces {
+        display: none;
+    }
+
+}

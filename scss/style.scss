@@ -1,0 +1,25 @@
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+}
+
+$mapBackgroundColor: (bgHeader:gray, bgFooter:black);
+
+@each $bg, $color in $mapBackgroundColor {
+    .#{$bg} {
+        background-color: $color;
+    }
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;1,100&display=swap');
+
+html { 
+    font-size: 62.5%;
+}
+
+@import "variables";
+@import "header";
+@import "main";
+@import "footer";

@@ -1,0 +1,524 @@
+@mixin h2 {
+    font-family:'Roboto', sans-serif;
+    font-size: $font_size_7;        
+    font-weight:bold;
+}
+
+$map_main: (font-weight: bold,text-align: center,color: black);
+
+.buttoncarouselBackground {
+    background-color: $color_gray;
+}
+
+/*Index*/
+.sectionBodyIndex {
+    background-image: url(../media/background.webp);
+}
+
+.doNotDisplay {
+    display:none
+}
+
+.eventos, .estudio, .corporativo, .viajes, .cursos {
+
+    img {
+        width: 40vw;
+        height: auto;
+        border: solid 0.5rem white;
+        border-radius: 30px;
+        transition: width 0.2s;
+    
+        &:hover {
+            width: 41vw;
+        }
+    }
+}
+
+.h2Index {
+    @include h2;
+    color: $color_white;
+}
+
+.h2IndexBlack {
+    @include h2;
+    color: $color_gray;
+}
+
+/* Quienes Somos - Estudia Fotografia */
+
+.sectionBodyQuienesSomos {
+    background-image: url(../media/background_010.webp);
+}
+
+.sectionBodyEstudiaFotografia {
+    background-image: url(../media/background_6.webp);
+}
+
+.sectionHeaderBlackH1 {
+    font-family:'Roboto', sans-serif;
+    font-size: 5rem;
+    font-weight: map-get($map_main, font-weight);
+    text-align: map-get($map_main, text-align);
+    margin-top: 5vh;
+    color: map-get($map_main, color);
+}
+
+.sectionHeaderWhiteH1 {
+    @extend .sectionHeaderBlackH1;
+    color: white;
+}
+
+.sectionQuienesSomos {
+    margin-left:5px;
+    padding-top: 100px;
+    padding-bottom: 20vh;
+    display: flex;
+    flex-direction: row;
+    justify-content:center;
+}
+
+.imageQuienesSomos {
+    margin-right:5px;
+    border: solid 0.5rem white ;
+    border-radius: 30px 5px 5px 30px;
+    height: 400px;
+    width: auto;
+}
+
+.quienesSomosParrafo {
+    margin-right:5px;
+    padding-left:5px;
+    padding-top:5px;
+    font-family:'Roboto', sans-serif;
+    font-size: 2rem;
+    text-align: wrap;
+    color: white;
+    border: solid 0.5rem white ;
+    border-radius: 5px 30px 30px 5px;
+    height: 400px;
+    width: 300px;
+}
+
+/* nuestros servicios */
+
+.sectionBodyNuestrosServicios {
+    background-image: url(../media/background_9.webp);
+}
+
+.nuestrosServiciosGroup {
+    padding-top: 60px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    padding-bottom: 60px;
+} 
+
+.nuestrosServiciosGroup1 {
+    @extend .nuestrosServiciosGroup;
+    padding-top: 60px;
+    padding-bottom: 60px;
+}
+
+.nuestrosServiciosGroup2 {
+    @extend .nuestrosServiciosGroup;
+    padding-top: 10vh;
+    padding-bottom: 20vh;
+}
+
+.wrapNuestrosServicios {
+    display: inline-block;
+    position: relative
+}
+
+.wrapNuestrosServicios h3 {
+    background-color: black;
+    opacity: 60%;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-family:'Roboto', sans-serif;
+    font-size: 3rem;
+    color: white;
+}
+
+.imageServicios {
+    margin-bottom:1px;
+    border: solid 0.5rem white ;
+    border-radius: 30px 30px 5px 5px;
+    height: 300px;
+    width: 300px;
+}
+
+.parrafoServicios {
+    margin-top:1px;
+    text-align: center;
+    font-family:'Roboto', sans-serif;
+    font-size: 1.5rem;
+    font-weight: bold;
+    background-color: white;
+    color:black;
+    border: solid 0.5rem white ;
+    border-radius: 5px 5px 30px 30px;
+    height: 200px;
+    width: 300px;
+}
+
+/* preguntas frecuentes */
+
+.sectionBodyPreguntasFrecuentes {
+    background-image: url(../media/preguntas_frecuentes_background.webp);
+}
+
+.sectionPreguntasFrecuentesHeader {
+    height: 10vh;
+    text-align: center;
+    width: auto;
+    margin-top: 5vh;
+}
+
+.sectionPreguntasFrecuentesHeader h1 {
+    font-family:'Roboto', sans-serif;
+    font-size: 5rem;
+    font-weight: bold;
+    text-align: center;
+    color: black;
+}
+
+.mainPreguntasFrecuentes {
+    margin-top: 15vh;
+    display: flex;
+    flex-direction: column;
+    font-family:'Roboto', sans-serif;
+    font-size: 2rem;
+    text-align: center;
+    color: black;
+}
+
+.boxPreguntas {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.boxPreguntasFrecuentes {
+    border: dotted thin black;
+    width: 900px;
+    height: auto;   
+}
+
+@keyframes animate {
+    0% {letter-spacing: normal;}
+    25% {letter-spacing: 2px;}
+    50% {letter-spacing: 4px;}
+    75% {letter-spacing: 2px;}
+    100%{letter-spacing: normal;}
+    }
+
+.Q1:hover {
+    background-color:#cccccc;
+    font-weight: bold;
+    animation-name: animate;
+    animation-iteration-count:initial;
+    animation-timing-function: ease-in;
+    animation-duration: 0.5s;
+}
+
+.Q2 {
+    transition: font-weight, background-color;
+}
+
+.Q2:hover {
+    font-weight: bold;
+    background-color:#cccccc;
+}
+
+.boxPreguntasFrecuentesUltima {
+    color:red;
+    font-size: 4rem;  
+}
+
+.boxPreguntasFrecuentesUltimaLink {
+    color:red;
+    font-size: 4rem;  
+    list-style: none;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.boxPreguntasFrecuentesUltimaLink:hover {
+    color:blue;
+}
+
+/* contacto */
+
+.sectionBodyContacto {
+    background-image: url(../media/preguntas_frecuentes_background.webp);
+}
+
+@media (min-width:651px) and (max-width:1000px) {
+
+    /*Header*/
+    .logoSize {
+        width: 400px;
+        height: auto;
+    }
+
+    .itemsNav {
+        font-size: 1.5rem;
+    }
+
+    .sectionHeader {
+        height: 10vh;
+        width: auto;
+        margin-top: 10vh;
+        img {
+            width: 300px;
+        }
+    }
+
+    /*Footer*/    
+    .containerFooterEnlaces {
+        display: none;
+    }
+
+    .containerFooterSocial {
+        flex-direction: column;
+        justify-items: center; 
+    }
+
+    .containerFooterSocial h3 {
+        text-align: center;
+    }
+
+    /*Index*/
+    .eventos, .estudio, .corporativo, .viajes, .cursos {
+
+        .h2Index, .h2IndexBlack {
+            font-size: $font_size_7 - 3rem;        
+        }
+
+        img {
+            border: solid 0.3rem $color_white;
+            border-radius: 20px;
+        }
+    }
+
+    /*Quiene Somos - Estudia Fotografia*/
+    .sectionHeaderWhiteH1, .sectionHeaderBlackH1 {
+        font-size: 4rem;
+    }
+
+    .sectionQuienesSomos {
+        padding-top: 50px;
+        padding-bottom: 10vh;
+    }
+
+    .imageQuienesSomos {
+        height: 200px;
+    }
+
+    .quienesSomosParrafo {
+        font-size: 1.2rem;
+        height: 200px;
+        width: 200px;
+    }
+
+    /* nuestros servicios */
+    .nuestrosServiciosTodos1 {
+        padding-top: 30px;
+        padding-bottom: 30px;
+    }
+
+    .wrapNuestrosServicios h3 {
+        top: 20px;
+        left: 20px;
+        font-size: 2rem;
+    }
+
+    .imageServicios {
+        height: 150px;
+        width: 150px;
+    }
+
+    .parrafoServicios {
+        font-size: 1rem;
+        height: 190px;
+        width: 150px;
+    }
+
+    /* preguntas frecuentes */
+    .sectionPreguntasFrecuentesHeader h1{
+        font-size: 4rem;
+    }
+
+    .sectionPreguntasFrecuentesHeader img{
+        width: 400px;
+    }
+
+    .mainPreguntasFrecuentes {
+        margin-top: 10vh;
+        font-size: 1.5rem;
+    }
+
+    .boxPreguntasFrecuentes {
+        width: 500px;
+    }
+
+    .boxPreguntasFrecuentesUltima {
+        font-size: 3rem;  
+    }    
+
+    .boxPreguntasFrecuentesUltimaLink {
+        font-size: 3rem;  
+    }
+
+}
+
+@media (max-width:650px) {
+
+    /*Header*/
+    .logoSize {
+        width: 150px;
+        height: auto;
+    }
+
+    .itemsNav {
+        font-size: 1rem;
+    }
+
+    .sectionHeader {
+        height: 5vh;
+        width: auto;
+        margin-top: 5vh;
+        img {
+            width: 200px;
+        }
+    }
+
+    /*Footer*/    
+    .socialMediaIconsCont a {
+        font-size:0.5rem;
+    }
+
+    .containerFooterEnlaces {
+        display: none;
+    }
+
+    .containerFooterSocial {
+        flex-direction: column;
+        justify-items: center; 
+    }
+
+    .containerFooterSocial h3 {
+        text-align: center;
+    }
+
+    /*Index*/
+    .eventos, .estudio, .corporativo, .viajes, .cursos {
+
+        .h2Index, .h2IndexBlack {
+            font-size: $font_size_7 - 3rem;        
+        }
+
+        img {
+            width: 80vw;
+            border: solid 0.2rem $color_white;
+            border-radius: 10px;
+
+            &:hover {
+                width: 81vw;
+            }
+        }
+    }
+
+    /*Quiene Somos - Estudia Fotografia*/
+    .sectionHeaderWhiteH1, .sectionHeaderBlackH1 {
+        font-size: 3rem;
+    }
+
+    .sectionQuienesSomos {
+        padding-top: 50px;
+        padding-bottom: 10vh;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .imageQuienesSomos {
+        border-radius: 10px 10px 5px 5px;
+        border-width: 2px;
+        height: 150px;
+        width: 150px;
+    }
+
+    .quienesSomosParrafo {
+        font-size: 1rem;
+        border-radius: 5px 5px 10px 10px;
+        border-width: 2px;
+        height: 170px;
+        width: 150px;
+    }
+
+    /* nuestros servicios */
+    .nuestrosServiciosGroup1 {
+        padding-top: 30px;
+        padding-bottom: 0px;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    
+    .nuestrosServiciosGroup2 {
+        padding-top: 0px;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .wrapNuestrosServicios h3 {
+        top: 30px;
+        font-size: 2rem;
+    }
+    
+    .imageServicios {
+        margin-top: 20px;
+        height: 150px;
+        width: 150px;
+    }
+    
+    .parrafoServicios {
+        font-size: 1rem;
+        height: 190px;
+        width: 150px;
+    }
+
+    /* preguntas frecuentes */
+    .sectionPreguntasFrecuentesHeader {
+        margin-top: 5vh;
+    }
+
+    .sectionPreguntasFrecuentesHeader H1{
+        font-size: 3rem;
+    }
+
+    .sectionPreguntasFrecuentesHeader img {
+        width: 200px;
+    }
+
+    .mainPreguntasFrecuentes {
+        margin-top: 5vh;
+        font-size: 1rem;
+    }
+    
+    .boxPreguntasFrecuentes {
+        width: 200px;
+    }
+    
+    .boxPreguntasFrecuentesUltima {
+        font-size: 1.5rem;  
+    }   
+
+    .boxPreguntasFrecuentesUltimaLink {
+        font-size: 1.5rem;  
+    }
+}
