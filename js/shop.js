@@ -2,8 +2,8 @@
 function shoppingCart(){
     alert("Bienvenido a la pagina de compra online del Estudio Fotografico PMU")
 
-    let cart=""
-    let finishShopping=false
+    let cart = ""
+    let finishShopping = false
 
     while (!finishShopping){
 
@@ -11,14 +11,22 @@ function shoppingCart(){
 
         let serviceDescription = getServiceDescription(serviceCode)
 
-        if (serviceDescription){
+        if (serviceDescription != ""){
             alert("El servicio seleccionado fue agregado con exito: "+serviceDescription)
             cart += "\n"+serviceDescription
         }
         else{
             if (serviceCode === null){
-                alert("No se agrego ningun item, se cerrara el carrito")
-                finishShopping = true
+                let closeCart = confirm ("Desea concluir su compra?")
+                    if (closeCart){
+                        finishShopping = true
+                    }
+                    else{
+                        if (cart =""){
+                        alert("No se agrego ningun item, se cerrara el carrito")
+                        finishShopping = true
+                        }
+                    }
             }
             else {
                 alert("Ingrese un codigo de producto valido")
@@ -27,7 +35,7 @@ function shoppingCart(){
     }
 
     if (cart != ""){
-        let checkout = confirm ("Revise que los items sean los correctos y confirme la compra: "+cart)
+        let checkout = confirm("Revise que los items sean los correctos y confirme la compra: "+cart)
         if (checkout){
             alert("Gracias por confiar en nosotros.")
         }
