@@ -17,9 +17,12 @@ array_services.push(corporativo)
 
 console.log(array_services)
 
+let count_menu_access=0
+
 function menu_principal(){
     alert("Bienvenidio al sistema de administracion de servicios")
     let option = parseInt(prompt("Seleccione de las siguientes opciones: \n 1)Ingreso de un nuevo servicio \n 2)Dar de baja un servicio \n 3)Modificar los datos de un servicio existente \n 4)Realizar una consulta \n 5)Salir del sistema de administracion de servicios"))
+    count_menu_access=count_menu_access+1
     return option
 }
 
