@@ -425,6 +425,25 @@ header .styleItmesNav .itemActivo {
   .boxPreguntasFrecuentesUltimaLink {
     font-size: 1.5rem; } }
 
+.imgProductos {
+  width: 150px;
+  height: 200px;
+  object-fit: contain;
+  margin-top: 1rem; }
+
+.card {
+  display: flex;
+  align-items: center;
+  margin: 0.5rem; }
+
+.colorBoton {
+  color: white;
+  background-color: #85bb65; }
+
+.colorBoton:hover {
+  background-color: green;
+  color: white; }
+
 footer {
   display: flex;
   font-family: 'Roboto', sans-serif;
