@@ -425,6 +425,9 @@ header .styleItmesNav .itemActivo {
   .boxPreguntasFrecuentesUltimaLink {
     font-size: 1.5rem; } }
 
+.sectionBodyCart {
+  background-image: url(../media/cart_background.webp); }
+
 .imgProductos {
   width: 150px;
   height: 200px;
