@@ -1,21 +1,21 @@
-class Producto {
-    constructor (id, nombre, precio, img) {
+class Service {
+    constructor (id, name, price, img) {
         this.id=id
-        this.nombre=nombre
-        this.precio=precio
+        this.name=name
+        this.price=price
         this.img=img
-        this.cantidad=1
+        this.quantity=1
     }
 }
 
-const arroz = new Producto (1,"Arroz",50000,"../media/Eventos.webp")
-const azucar = new Producto (2,"Azucar",70000,"../media/Estudio.webp")
-const fideos = new Producto (3,"Fideos",100000,"../media/Corporativo.webp")
-const mermelada = new Producto (4,"Mermelada",200000,"../media/Viajes.webp")
-const queso = new Producto (5,"Queso",10000,"../media/Estudiar.webp")
+const eventos = new Service (1,"Eventos",50000,"../media/Eventos.webp")
+const estudio = new Service (2,"Estudio",70000,"../media/Estudio.webp")
+const corporativo = new Service (3,"Corporativo",100000,"../media/Corporativo.webp")
+const viajes = new Service (4,"Viajes",200000,"../media/Viajes.webp")
+const estudiar = new Service (5,"Estudiar",10000,"../media/Estudiar.webp")
 
-//creo array con todos mis productos
-const productos = [arroz, azucar, fideos, mermelada, queso]
+//creo array con todos los servicios
+const services = [eventos, estudio, corporativo, viajes, estudiar]
 
 //creo array carrito
 let carrito = []
@@ -29,39 +29,39 @@ if (localStorage.getItem("carrito")) {
 //DOM
 const contenedorProductos=document.getElementById("contenedorProductos")
 
-//funcion para mostrar productos
+//funcion para mostrar servicios
 const mostrarProductos=()=>{
-    productos.forEach((producto)=>{
+    services.forEach((service)=>{
         const card =document.createElement("div")
         card.classList.add("col-xl-3","col-md-6","col-xs-12")
         card.innerHTML=`
             <div class="card">
-                <img src= "${producto.img}" class="card-img-top imgProductos" alt="${producto.nombre}">
+                <img src= "${service.img}" class="card-img-top imgProductos" alt="${service.name}">
                 <div class="card-body">
-                <h5 class="card-title"> ${producto.nombre} </h5>
-                <p class="card-text"> ${producto.precio} </p>
-                <button class="btn colorBoton" id="boton${producto.id}">Agregar al Carrito</button>
+                <h5 class="card-title"> ${service.name} </h5>
+                <p class="card-text"> ${service.price} </p>
+                <button class="btn colorBoton" id="boton${service.id}">Agregar al Carrito</button>
                 </div>
             </div>
         `
         contenedorProductos.appendChild(card)
 
-        //agregar productos al carrito
-        const boton = document.getElementById(`boton${producto.id}`)
+        //agregar servicios al carrito
+        const boton = document.getElementById(`boton${service.id}`)
         boton.addEventListener("click",()=> {
-            agregarAlCarrito(producto.id)
+            agregarAlCarrito(service.id)
         })
     })
 }
 
 const agregarAlCarrito= (id)=> {
-    const producto=productos.find((producto)=>producto.id === id)
-    const productoEnCarrito = carrito.find((producto)=>producto.id === id)
+    const service=services.find((service)=>service.id === id)
+    const productoEnCarrito = carrito.find((service)=>service.id === id)
     if(productoEnCarrito){
-        productoEnCarrito.cantidad++
+        productoEnCarrito.quantity++
     }
     else{
-        carrito.push(producto)
+        carrito.push(service)
         localStorage.setItem("carrito",JSON.stringify(carrito))
     }
     calcularTotal ()
@@ -78,27 +78,27 @@ verCarrito.addEventListener("click", ()=> {
 
 const mostrarCarrito=()=>{
     contenedorCarrito.innerHTML=""
-    carrito.forEach((producto)=>{
+    carrito.forEach((service)=>{
         const card =document.createElement("div")
         card.classList.add("col-xl-3","col-md-6","col-xs-12")
         card.innerHTML = `
             <div class="card">
-                <img src= "${producto.img}" class="card-img-top imgProductos" alt="${producto.nombre}">
+                <img src= "${service.img}" class="card-img-top imgProductos" alt="${service.name}">
                 <div class="card-body">
-                <h5 class="card-title"> ${producto.nombre} </h5>
-                <p class="card-text"> ${producto.precio} </p>
-                <p class="card-text"> ${producto.cantidad} </p>
-                <button class="btn colorBoton" id="eliminar${producto.id}">Elimiar Producot</button>
+                <h5 class="card-title"> ${service.name} </h5>
+                <p class="card-text"> ${service.price} </p>
+                <p class="card-text"> ${service.quantity} </p>
+                <button class="btn colorBoton" id="eliminar${service.id}">Elimiar Producot</button>
                 </div>
             </div>
         `
         contenedorCarrito.appendChild(card)
 
-        //eliminar productos del carrito
+        //eliminar servicios del carrito
 
-        const boton=document.getElementById(`eliminar${producto.id}`)
+        const boton=document.getElementById(`eliminar${service.id}`)
         boton.addEventListener("click", ()=> {
-            eliminarDelCarrito (producto.id)
+            eliminarDelCarrito (service.id)
             localStorage.setItem("carrito",JSON.stringify(carrito))
         })
     })
@@ -107,8 +107,8 @@ const mostrarCarrito=()=>{
 
 
 const eliminarDelCarrito = (id) => {
-    const producto = carrito.find((producto) => producto.id === id)
-    const indice = carrito.indexOf(producto)
+    const service = carrito.find((service) => service.id === id)
+    const indice = carrito.indexOf(service)
     carrito.splice(indice,1)
     mostrarCarrito()
 
@@ -134,8 +134,8 @@ const eliminarTodoElCarrito=()=>{
 const total=document.getElementById("total")
 const calcularTotal = () => {
     let totalCompra = 0
-    carrito.forEach((producto)=>{
-        totalCompra += producto.precio * producto.cantidad
+    carrito.forEach((service)=>{
+        totalCompra += service.price * service.quantity
     })
     total.innerHTML = `$${totalCompra}`
 }
