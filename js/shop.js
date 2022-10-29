@@ -36,7 +36,7 @@ const mostrarProductos=()=>{
         card.classList.add("col-xl-3","col-md-6","col-xs-12")
         card.innerHTML=`
             <div class="card">
-                <img src= "${service.img}" class="card-img-top imgProductos" alt="${service.name}">
+                <img src= "${service.img}" class="card-img-top imgServices" alt="${service.name}">
                 <div class="card-body">
                 <h5 class="card-title"> ${service.name} </h5>
                 <p class="card-text"> ${service.price} </p>
@@ -83,7 +83,7 @@ const mostrarCarrito=()=>{
         card.classList.add("col-xl-3","col-md-6","col-xs-12")
         card.innerHTML = `
             <div class="card">
-                <img src= "${service.img}" class="card-img-top imgProductos" alt="${service.name}">
+                <img src= "${service.img}" class="card-img-top imgServices" alt="${service.name}">
                 <div class="card-body">
                 <h5 class="card-title"> ${service.name} </h5>
                 <p class="card-text"> ${service.price} </p>
