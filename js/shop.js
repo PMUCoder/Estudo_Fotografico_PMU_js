@@ -65,6 +65,7 @@ const agregarAlCarrito= (id)=> {
         localStorage.setItem("carrito",JSON.stringify(carrito))
     }
     calcularTotal ()
+    mostrarCarrito()
 }
 
 mostrarProductos()
@@ -98,6 +99,7 @@ const mostrarCarrito=()=>{
 
         const boton=document.getElementById(`eliminar${service.id}`)
         boton.addEventListener("click", ()=> {
+            service.quantity=1
             eliminarDelCarrito (service.id)
             localStorage.setItem("carrito",JSON.stringify(carrito))
         })
@@ -111,23 +113,24 @@ const eliminarDelCarrito = (id) => {
     const indice = carrito.indexOf(service)
     carrito.splice(indice,1)
     mostrarCarrito()
-
     localStorage.setItem("carrito",JSON.stringify(carrito)) 
 }
 
-//vacias carrito de compras
+//vaciar carrito de compras
 
 const vaciarCarrito = document.getElementById("vaciarCarrito")
 vaciarCarrito.addEventListener("click", ()=> {
     eliminarTodoElCarrito()
-
-    localStorage.clear()
+    localStorage.clear
 })
 
 const eliminarTodoElCarrito=()=>{
+    carrito.forEach((service)=>{
+        service.quantity=1
     carrito=[]
     mostrarCarrito()
     localStorage.clear()
+})
 }
 
 //total de la compra
