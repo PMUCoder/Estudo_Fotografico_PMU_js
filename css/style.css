@@ -425,8 +425,26 @@ header .styleItmesNav .itemActivo {
   .boxPreguntasFrecuentesUltimaLink {
     font-size: 1.5rem; } }
 
+.locationMain {
+  width: 400px;
+  height: 400px;
+  border-radius: 2%;
+  margin-left: 5rem;
+  padding-left: 2rem;
+  margin-top: 5rem;
+  background: rgba(255, 255, 255, 0.5); }
+
+.sectionLogin {
+  background-image: url(../media/master-key.webp);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover; }
+
 .sectionBodyCart {
-  background-image: url(../media/cart_background.webp); }
+  background-image: url(../media/cart_background.webp);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover; }
 
 .imgServices {
   width: 150px;
