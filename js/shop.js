@@ -1,37 +1,28 @@
-class Service {
-    constructor (id, name, price, img) {
-        this.id=id
-        this.name=name
-        this.price=price
-        this.img=img
-        this.quantity=1
-    }
-}
+//ruta archivo JSON con coleccion de servicios
+const services = "../services.json"
 
-const eventos = new Service (1,"Eventos",50000,"../media/Eventos.webp")
-const estudio = new Service (2,"Estudio",70000,"../media/Estudio.webp")
-const corporativo = new Service (3,"Corporativo",100000,"../media/Corporativo.webp")
-const viajes = new Service (4,"Viajes",200000,"../media/Viajes.webp")
-const estudiar = new Service (5,"Estudiar",10000,"../media/Estudiar.webp")
-
-//creo array con todos los servicios
-const services = [eventos, estudio, corporativo, viajes, estudiar]
-
-//creo array carrito
+//creo array carrito vacio
 let carrito = []
 
 //cargar carrito si hay algo en el localstorage
-
-if (localStorage.getItem("carrito")) {
-    carrito=JSON.parse(localStorage.getItem("carrito"))
-}
+recoverFromLocalStorage()
 
 //DOM
-const contenedorProductos=document.getElementById("contenedorProductos")
+const contenedorServicios=document.getElementById("contenedorServicios")
+
+//Fetch servicios desde el JSON
+fetch(services)
+    .then(response=>response.json())
+    .then((serviceList)=>{
+        mostrarServicios(serviceList)
+    })
+
+//mostrar los servicios en el DOM
+mostrarServicios()
 
 //funcion para mostrar servicios
-const mostrarProductos=()=>{
-    services.forEach((service)=>{
+function mostrarServicios(serviceList) {
+    serviceList.forEach((service)=>{
         const card =document.createElement("div")
         card.classList.add("col-xl-3","col-md-6","col-xs-12")
         card.innerHTML=`
@@ -44,7 +35,7 @@ const mostrarProductos=()=>{
                 </div>
             </div>
         `
-        contenedorProductos.appendChild(card)
+        contenedorServicios.appendChild(card)
 
         //agregar servicios al carrito
         const boton = document.getElementById(`boton${service.id}`)
@@ -54,21 +45,21 @@ const mostrarProductos=()=>{
     })
 }
 
+//Funcion para agregar productos al carrito
 const agregarAlCarrito= (id)=> {
+    alert("hello")
     const service=services.find((service)=>service.id === id)
-    const productoEnCarrito = carrito.find((service)=>service.id === id)
-    if(productoEnCarrito){
-        productoEnCarrito.quantity++
-    }
-    else{
-        carrito.push(service)
-        localStorage.setItem("carrito",JSON.stringify(carrito))
-    }
-    calcularTotal ()
+    const servicioEnCarrito = carrito.find((service)=>service.id === id)
+        if(servicioEnCarrito){
+            servicioEnCarrito.quantity++
+        }
+        else{
+            carrito.push(service)
+            saveToLocalStorage()
+        }
+    calcularTotal()
     mostrarCarrito()
 }
-
-mostrarProductos()
 
 const contenedorCarrito=document.getElementById("contenedorCarrito")
 const verCarrito=document.getElementById("verCarrito")
@@ -76,7 +67,7 @@ verCarrito.addEventListener("click", ()=> {
     mostrarCarrito()
 })
 
-
+//Funcion para mostrar carrito
 const mostrarCarrito=()=>{
     contenedorCarrito.innerHTML=""
     carrito.forEach((service)=>{
@@ -95,29 +86,27 @@ const mostrarCarrito=()=>{
         `
         contenedorCarrito.appendChild(card)
 
-        //eliminar servicios del carrito
-
+        //eliminar servicios del carrito, resetea la cantidad de unidades del servicio a 1
         const boton=document.getElementById(`eliminar${service.id}`)
         boton.addEventListener("click", ()=> {
             service.quantity=1
             eliminarDelCarrito (service.id)
-            localStorage.setItem("carrito",JSON.stringify(carrito))
+            saveToLocalStorage()
         })
     })
     calcularTotal ()
 }       
 
-
+//funcion para eliminar un servicio del carrito
 const eliminarDelCarrito = (id) => {
     const service = carrito.find((service) => service.id === id)
     const indice = carrito.indexOf(service)
     carrito.splice(indice,1)
     mostrarCarrito()
-    localStorage.setItem("carrito",JSON.stringify(carrito)) 
+    saveToLocalStorage()
 }
 
 //vaciar carrito de compras
-
 const vaciarCarrito = document.getElementById("vaciarCarrito")
 vaciarCarrito.addEventListener("click", ()=> {
     eliminarTodoElCarrito()
@@ -141,4 +130,16 @@ const calcularTotal = () => {
         totalCompra += service.price * service.quantity
     })
     total.innerHTML = `$${totalCompra}`
+}
+
+//recuperar del localStorage
+function recoverFromLocalStorage(){
+    if (localStorage.getItem("carrito")) {
+        carrito=JSON.parse(localStorage.getItem("carrito"))
+    }
+}
+
+//guardar en localStorage
+function saveToLocalStorage(){
+localStorage.setItem("carrito",JSON.stringify(carrito))
 }
