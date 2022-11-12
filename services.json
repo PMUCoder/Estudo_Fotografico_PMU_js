@@ -1,7 +1,7 @@
 [
-    {"id":1,"name": "Eventos","price": 50000,"img": "../media/Eventos.webp"},
-    {"id":2,"name": "Estudio","price": 70000,"img": "../media/Estudio.webp"},
-    {"id":3,"name": "Corporativo","price": 100000,"img": "../media/Corporativo.webp"},
-    {"id":4,"name": "Viajes","price": 200000,"img": "../media/Viajes.webp"},
-    {"id":5,"name": "Estudiar","price": 10000,"img": "../media/Estudiar.webp"}
+    {"id":1,"name": "Eventos","price": 50000,"quantity":1,"img": "../media/Eventos.webp"},
+    {"id":2,"name": "Estudio","price": 70000,"quantity":1,"img": "../media/Estudio.webp"},
+    {"id":3,"name": "Corporativo","price": 100000,"quantity":1,"img": "../media/Corporativo.webp"},
+    {"id":4,"name": "Viajes","price": 200000,"quantity":1,"img": "../media/Viajes.webp"},
+    {"id":5,"name": "Estudiar","price": 10000,"quantity":1,"img": "../media/Estudiar.webp"}
 ]

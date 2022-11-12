@@ -1,14 +1,5 @@
-//ruta archivo JSON con coleccion de servicios
+//Ruta archivo JSON con coleccion de servicios
 const services = "../services.json"
-
-//creo array carrito vacio
-let carrito = []
-
-//cargar carrito si hay algo en el localstorage
-recoverFromLocalStorage()
-
-//DOM
-const contenedorServicios=document.getElementById("contenedorServicios")
 
 //Fetch servicios desde el JSON
 fetch(services)
@@ -17,10 +8,20 @@ fetch(services)
         mostrarServicios(serviceList)
     })
 
-//mostrar los servicios en el DOM
-mostrarServicios()
+//inicializo array del carrito vacio
+let carrito = []
 
-//funcion para mostrar servicios
+function quantityServiciosCarrito (){
+let quantityServiciosCarrito = carrito.length
+}
+
+//Cargar carrito si hay algo en el LocalStorage
+recoverFromLocalStorage()
+
+//DOM
+const contenedorServicios=document.getElementById("contenedorServicios")
+
+//Funcion para mostrar servicios en el DOM
 function mostrarServicios(serviceList) {
     serviceList.forEach((service)=>{
         const card =document.createElement("div")
@@ -37,7 +38,7 @@ function mostrarServicios(serviceList) {
         `
         contenedorServicios.appendChild(card)
 
-        //agregar servicios al carrito
+        //Agregar servicios al carrito
         const boton = document.getElementById(`boton${service.id}`)
         boton.addEventListener("click",()=> {
             agregarAlCarrito(service.id)
@@ -45,22 +46,27 @@ function mostrarServicios(serviceList) {
     })
 }
 
-//Funcion para agregar productos al carrito
-const agregarAlCarrito= (id)=> {
-    alert("hello")
-    const service=services.find((service)=>service.id === id)
-    const servicioEnCarrito = carrito.find((service)=>service.id === id)
-        if(servicioEnCarrito){
-            servicioEnCarrito.quantity++
-        }
-        else{
-            carrito.push(service)
-            saveToLocalStorage()
-        }
-    calcularTotal()
-    mostrarCarrito()
+//Funcion para agregar los servicios al carrito
+const agregarAlCarrito = (id) => {
+    fetch(services)
+        .then(response => response.json())
+        .then((serviceList) => {
+            const service = serviceList.find((service) => service.id === id)
+            const servicioEnCarrito = carrito.find((service) => service.id === id)
+            if (servicioEnCarrito) {
+                servicioEnCarrito.quantity++
+            }
+            else {
+                carrito.push(service)
+                saveToLocalStorage()
+            }
+            calcularTotal()
+            mostrarCarrito()
+        })
+    quantityServiciosCarrito ()
 }
 
+//Funcionalidad del boton "mostrarCarrito" con evento "click"
 const contenedorCarrito=document.getElementById("contenedorCarrito")
 const verCarrito=document.getElementById("verCarrito")
 verCarrito.addEventListener("click", ()=> {
@@ -69,6 +75,10 @@ verCarrito.addEventListener("click", ()=> {
 
 //Funcion para mostrar carrito
 const mostrarCarrito=()=>{
+    if (quantityServiciosCarrito=0){
+        Swal.fire('El carrito esta vacio, seleccione al menos un Servicio')
+    }
+    else{
     contenedorCarrito.innerHTML=""
     carrito.forEach((service)=>{
         const card =document.createElement("div")
@@ -80,24 +90,35 @@ const mostrarCarrito=()=>{
                 <h5 class="card-title"> ${service.name} </h5>
                 <p class="card-text"> ${service.price} </p>
                 <p class="card-text"> ${service.quantity} </p>
-                <button class="btn colorBoton" id="eliminar${service.id}">Elimiar Producot</button>
+                <button class="btn colorBoton" id="eliminar${service.id}">Elimiar Servicio</button>
                 </div>
             </div>
         `
         contenedorCarrito.appendChild(card)
 
-        //eliminar servicios del carrito, resetea la cantidad de unidades del servicio a 1
+        //Funcionalidad del boton "Eliminar Servicio" con evento "click" / elimina el servicio seleccionado del carrito y resetea cantidad a 1
         const boton=document.getElementById(`eliminar${service.id}`)
         boton.addEventListener("click", ()=> {
             service.quantity=1
             eliminarDelCarrito (service.id)
             saveToLocalStorage()
+            Toastify({
+                text:"Se eliminó el servicio del carrito",
+                duration:3000,
+                gravity:"top",
+                position:"center",
+                style:
+                {
+                    background: "linear-gradient(to right, #00b09b, #96c93d)",
+                }
+            }).showToast() 
         })
     })
     calcularTotal ()
+    }
 }       
 
-//funcion para eliminar un servicio del carrito
+//Funcion para eliminar un servicio del carrito
 const eliminarDelCarrito = (id) => {
     const service = carrito.find((service) => service.id === id)
     const indice = carrito.indexOf(service)
@@ -106,40 +127,67 @@ const eliminarDelCarrito = (id) => {
     saveToLocalStorage()
 }
 
-//vaciar carrito de compras
+//Funcionalidad del boton "Vaciar Carrito" con evento "click" vaciar todo el carrito de compras
 const vaciarCarrito = document.getElementById("vaciarCarrito")
 vaciarCarrito.addEventListener("click", ()=> {
     eliminarTodoElCarrito()
-    localStorage.clear
+    Toastify({
+        text:"Se vació el carrito con éxito",
+        duration:3000,
+        gravity:"top",
+        position:"center",
+        style:
+        {
+            background: "linear-gradient(to right, #00b09b, #96c93d)",
+        }
+    }).showToast() 
 })
 
+//Funcionalidad para eliminar todos los servicios del carrito
 const eliminarTodoElCarrito=()=>{
     carrito.forEach((service)=>{
         service.quantity=1
     carrito=[]
     mostrarCarrito()
     localStorage.clear()
-})
+    })
 }
 
-//total de la compra
+//Mostrar el total de la compra a medida que se agregan servicios
 const total=document.getElementById("total")
 const calcularTotal = () => {
-    let totalCompra = 0
-    carrito.forEach((service)=>{
-        totalCompra += service.price * service.quantity
-    })
-    total.innerHTML = `$${totalCompra}`
+    fetch(services)
+        .then(response => response.json())
+        .then(() => {
+            let totalCompra = 0
+            carrito.forEach((service)=>{
+            totalCompra += service.price * service.quantity
+            })  
+        total.innerHTML = `$${totalCompra}`
+        })
 }
 
-//recuperar del localStorage
+//Simulador concretar compra del carrito presionando boton "Comprar Carrito"
+const comprarCarrito = document.getElementById("comprarCarrito")
+comprarCarrito.addEventListener("click", ()=> {
+    Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Felicidades, la operacion de compra ha sido exitosa',
+        showConfirmButton: false,
+        timer: 3000
+    })
+    eliminarTodoElCarrito()
+})
+
+//Recuperar del localStorage
 function recoverFromLocalStorage(){
     if (localStorage.getItem("carrito")) {
         carrito=JSON.parse(localStorage.getItem("carrito"))
     }
 }
 
-//guardar en localStorage
+//Guardar en localStorage
 function saveToLocalStorage(){
 localStorage.setItem("carrito",JSON.stringify(carrito))
 }

@@ -570,6 +570,16 @@ $map_main: (font-weight: bold,text-align: center,color: black);
 }
 
 .colorBoton:hover {
-    background-color: green;
     color:white;
+    background-color: green;
+}
+
+.colorBotonBuy {
+    color:white;
+    background-color: #bb7d65;
+}
+
+.colorBotonBuy:hover {
+    color:white;
+    background-color: #c54d1e;
 }
