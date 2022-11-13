@@ -51,6 +51,7 @@ const agregarAlCarrito = (id) => {
             const servicioEnCarrito = carrito.find((service) => service.id === id)
             if (servicioEnCarrito) {
                 servicioEnCarrito.quantity++
+                saveToLocalStorage()
             }
             else {
                 carrito.push(service)
@@ -83,10 +84,10 @@ const mostrarCarrito=()=>{
             <div class="card">
                 <img src= "${service.img}" class="card-img-top imgServices" alt="${service.name}">
                 <div class="card-body">
-                <h5 class="card-title"> ${service.name} </h5>
-                <p class="card-text"> ${service.price} </p>
-                <p class="card-text"> ${service.quantity} </p>
-                <button class="btn colorBoton" id="eliminar${service.id}">Elimiar Servicio</button>
+                    <h5 class="card-title"> ${service.name} </h5>
+                    <p class="card-text"> ${service.price} </p>
+                    <p class="card-text"> ${service.quantity} </p>
+                    <button class="btn colorBoton" id="eliminar${service.id}">Elimiar Servicio</button>
                 </div>
             </div>
         `
