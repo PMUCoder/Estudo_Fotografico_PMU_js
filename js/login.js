@@ -35,27 +35,20 @@ btnLogin.addEventListener("click", ()=>{
         if(result.isConfirmed) {
             const usernameInput=document.getElementById("username")
             const passwordInput=document.getElementById("password")
-            let userFound = users.find(user=>user.username===usernameInput.value && user.password===passwordInput.value)
-            if(userFound){
-                successMessage (usernameInput)
-            }
-            else{
-                errorMessage ()
-                loginAttempts++
-            }
+            userLogin (usernameInput,passwordInput)
         }   
     })
 }) 
 
-//almacenamiento en localStorage
-function storeUsers (){
-localStorage.setItem("users",JSON.stringify(users))
-}
-
-//recupero de datos del localStorage
-function recoverUsers (){
-    if (localStorage.getItem("users")) {
-        users=JSON.parse(localStorage.getItem("users"))
+//Funcion de consulta al array para userLogin + mensajes al usuario
+function userLogin (usernameInput,passwordInput) {
+    let userFound = users.find(user=>user.username===usernameInput.value && user.password===passwordInput.value)
+    if(userFound){
+        successMessage (usernameInput)
+    }
+    else{
+        errorMessage ()
+        loginAttempts++
     }
 }
 
@@ -78,29 +71,89 @@ function errorMessage () {
     else{
         loginMessageTxt = "Los datos ingresados son incorrectos, revise usuario y contraseña e intentelo nuevamente."+"\n"+"Recuerde que luego de 3 intentos su usuario sera bloqueado por seguridad."+"\n"+"Le "+(loginAttempts>1 ? ("queda ") : ("quedan "))+parseInt(loginAttemptsLimit-loginAttempts)+ (loginAttempts>1 ? (" intento.") : (" intentos."))
     }
-        swal.fire({
+    swal.fire({
+    title: loginMessageTxt,
+    icon: "error",
+    confirmButtonText: "Aceptar",
+    })
+    loginMessage.innerText= loginMessageTxt
+}
+
+//Create user
+btnNewUser.addEventListener("click", ()=>{
+    swal.fire({
+        title: "Registrar Nuevo Usuario",
+        html: `<input type="text" id="username" class="swal2-input" placeholder="username">
+        <input type="password" id="password" class="swal2-input" placeholder="password">`,
+        confirmButtonText: "Enviar",
+        showCancelButton: true,
+        cancelButtonText: "Cancelar",
+    }).then((result) => {
+        if(result.isConfirmed) {
+            const usernameInput=document.getElementById("username")
+            const passwordInput=document.getElementById("password")
+            registerNewUser (usernameInput,passwordInput)
+        }   
+    })
+}) 
+
+//Funcion de registro de nuevo usuario + validacion + mensajes al usuario
+function registerNewUser (usernameInput,passwordInput) {
+    let newUserFound = users.find(user=>user.username===usernameInput.value)
+    if(newUserFound){
+        newUserErrorMessage (newUserFound)
+    }
+    else{
+        if (usernameInput.value=="" || passwordInput.value==""){
+            newUserErrorMessage (newUserFound)
+        }
+        else{
+            let newUser = new Login (usernameInput.value,passwordInput.value,false)
+            users.push(newUser)
+            storeUsers ()
+            newUserSuccessMessage (usernameInput)
+        }
+    }    
+}
+
+//mensajes nuevo usuario creado con exito
+function newUserSuccessMessage (usernameInput) {
+    loginMessageTxt = "El usuario "+usernameInput.value+" se creo con éxito. Ya puede logearse con su usuario y clave.",
+    swal.fire({
         title: loginMessageTxt,
-        icon: "error",
+        icon: "success",
         confirmButtonText: "Aceptar",
     })
     loginMessage.innerText= loginMessageTxt
 }
 
+//mensajes de error creacion de nuevo usuario
+function newUserErrorMessage (newUserFound) {
+    if (newUserFound){
+        loginMessageTxt = "El usuario que usted intenta registrar ya existe por favor elija un nombre distinto"
+    }
+    else{
+        loginMessageTxt = "Debe ingresar un valor de username y password para completar el registro"
+    }
+    swal.fire({
+    title: loginMessageTxt,
+    icon: "error",
+    confirmButtonText: "Aceptar",
+    })
+    loginMessage.innerText= loginMessageTxt
+}   
 
-//nuevo usuario
-/*const btn = document.getElementById("btn")
-btn.addEventListener("click", ()=> {
-console.log("Hola, me hiciste click")
-})
-
-para listar la array: ejemplo
-for(let i=0; i<salad.length; i++) {
-console.log(`Element at index ${i} is ${salad[i]}`);
-}
-
-
-*/
-
+//almacenamiento en localStorage
+function storeUsers (){
+    localStorage.setItem("users",JSON.stringify(users))
+    }
+    
+    //recupero de datos del localStorage
+    function recoverUsers (){
+        if (localStorage.getItem("users")) {
+            users=JSON.parse(localStorage.getItem("users"))
+        }
+    }
 
 //funcion cambio de contraseña
 
