@@ -11,10 +11,6 @@ fetch(services)
 //inicializo array del carrito vacio
 let carrito = []
 
-function quantityServiciosCarrito (){
-let quantityServiciosCarrito = carrito.length
-}
-
 //Cargar carrito si hay algo en el LocalStorage
 recoverFromLocalStorage()
 
@@ -62,23 +58,23 @@ const agregarAlCarrito = (id) => {
             }
             calcularTotal()
             mostrarCarrito()
-        })
-    quantityServiciosCarrito ()
+    })
 }
 
 //Funcionalidad del boton "mostrarCarrito" con evento "click"
 const contenedorCarrito=document.getElementById("contenedorCarrito")
 const verCarrito=document.getElementById("verCarrito")
 verCarrito.addEventListener("click", ()=> {
-    mostrarCarrito()
+    if (carrito.length===0){
+        Swal.fire('El carrito esta vacio, seleccione al menos un Servicio')
+    }
+    else{
+        mostrarCarrito()
+    }
 })
 
 //Funcion para mostrar carrito
 const mostrarCarrito=()=>{
-    if (quantityServiciosCarrito=0){
-        Swal.fire('El carrito esta vacio, seleccione al menos un Servicio')
-    }
-    else{
     contenedorCarrito.innerHTML=""
     carrito.forEach((service)=>{
         const card =document.createElement("div")
@@ -115,7 +111,6 @@ const mostrarCarrito=()=>{
         })
     })
     calcularTotal ()
-    }
 }       
 
 //Funcion para eliminar un servicio del carrito
@@ -130,17 +125,22 @@ const eliminarDelCarrito = (id) => {
 //Funcionalidad del boton "Vaciar Carrito" con evento "click" vaciar todo el carrito de compras
 const vaciarCarrito = document.getElementById("vaciarCarrito")
 vaciarCarrito.addEventListener("click", ()=> {
-    eliminarTodoElCarrito()
-    Toastify({
-        text:"Se vació el carrito con éxito",
-        duration:3000,
-        gravity:"top",
-        position:"center",
-        style:
-        {
-            background: "linear-gradient(to right, #00b09b, #96c93d)",
-        }
-    }).showToast() 
+    if (carrito.length===0){
+        Swal.fire('El carrito ya se encuentra vacio')
+    }
+    else{
+        eliminarTodoElCarrito()
+        Toastify({
+            text:"Se vació el carrito con éxito",
+            duration:3000,
+            gravity:"top",
+            position:"center",
+            style:
+            {
+                background: "linear-gradient(to right, #00b09b, #96c93d)",
+            }
+        }).showToast()
+    }
 })
 
 //Funcionalidad para eliminar todos los servicios del carrito
@@ -170,14 +170,19 @@ const calcularTotal = () => {
 //Simulador concretar compra del carrito presionando boton "Comprar Carrito"
 const comprarCarrito = document.getElementById("comprarCarrito")
 comprarCarrito.addEventListener("click", ()=> {
-    Swal.fire({
-        position: 'center',
-        icon: 'success',
-        title: 'Felicidades, la operacion de compra ha sido exitosa',
-        showConfirmButton: false,
-        timer: 3000
-    })
-    eliminarTodoElCarrito()
+    if (carrito.length===0){
+        Swal.fire('El carrito esta vacio, seleccione al menos un Servicio')
+    }
+    else{
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Felicidades, la operacion de compra ha sido exitosa',
+            showConfirmButton: false,
+            timer: 3000
+        })
+        eliminarTodoElCarrito()
+    }
 })
 
 //Recuperar del localStorage
