@@ -178,9 +178,9 @@ function storeUsers (){
     localStorage.setItem("users",JSON.stringify(users))
     }
     
-    //recupero de datos del localStorage
-    function recoverUsers (){
-        if (localStorage.getItem("users")) {
-            users=JSON.parse(localStorage.getItem("users"))
-        }
+//recupero de datos del localStorage
+function recoverUsers (){
+    if (localStorage.getItem("users")) {
+        users=JSON.parse(localStorage.getItem("users"))
     }
+}
