@@ -24,6 +24,20 @@ let loginAttemptsLimit=3
 
 //login
 btnLogin.addEventListener("click", ()=>{
+    let userLogged = users.find(user=>user.login_status===true)
+    if (userLogged) {
+        users.forEach((user)=>{
+            user.login_status=false
+            btnLogin.innerText= "Login"
+            swal.fire({
+                title: "El logoff fue exitoso. Hasta la próxima",
+                icon: "success",
+                confirmButtonText: "Aceptar",
+            })
+            storeUsers ()
+        })
+    }
+    else{
     swal.fire({
         title: "Login",
         html: `<input type="text" id="username" class="swal2-input" placeholder="username">
@@ -38,13 +52,17 @@ btnLogin.addEventListener("click", ()=>{
             userLogin (usernameInput,passwordInput)
         }   
     })
+    }
 }) 
 
 //Funcion de consulta al array para userLogin + mensajes al usuario
 function userLogin (usernameInput,passwordInput) {
     let userFound = users.find(user=>user.username===usernameInput.value && user.password===passwordInput.value)
     if(userFound){
+        userFound.login_status=true
+        storeUsers ()
         successMessage (usernameInput)
+        btnLogin.innerText= "Logoff"
     }
     else{
         errorMessage ()
@@ -59,14 +77,14 @@ function successMessage (usernameInput) {
         icon: "success",
         confirmButtonText: "Aceptar",
     })
-    loginMessage.innerText= "El usuario "+usernameInput.value+" se logeo con exito"
+    loginMessage.innerText= "El usuario "+usernameInput.value+" se logeo con éxito"
     loginAttempts=1
 }
 
 //mensajes usuario login con exito
 function errorMessage () {
     if(loginAttempts >= loginAttemptsLimit){
-        loginMessageTxt = "Alcanzo el numero maximo de intentos su usuario ha sigo bloqueado, por favor contactese con nuestro centro de ayuda"
+        loginMessageTxt = "Alcanzó el número máximo de intentos su usuario ha sigo bloqueado, por favor contactese con nuestro centro de ayuda"
     }
     else{
         loginMessageTxt = "Los datos ingresados son incorrectos, revise usuario y contraseña e intentelo nuevamente."+"\n"+"Recuerde que luego de 3 intentos su usuario sera bloqueado por seguridad."+"\n"+"Le "+(loginAttempts>1 ? ("queda ") : ("quedan "))+parseInt(loginAttemptsLimit-loginAttempts)+ (loginAttempts>1 ? (" intento.") : (" intentos."))
@@ -81,6 +99,17 @@ function errorMessage () {
 
 //Create user
 btnNewUser.addEventListener("click", ()=>{
+    let userLogged = users.find(user=>user.login_status===true)
+    if (userLogged) {
+        users.forEach((user)=>{
+            swal.fire({
+                title: "Ud. ya posee un usuario registrado",
+                icon: "error",
+                confirmButtonText: "Aceptar",
+            })
+        })
+    }
+    else{
     swal.fire({
         title: "Registrar Nuevo Usuario",
         html: `<input type="text" id="username" class="swal2-input" placeholder="username">
@@ -95,6 +124,7 @@ btnNewUser.addEventListener("click", ()=>{
             registerNewUser (usernameInput,passwordInput)
         }   
     })
+    }
 }) 
 
 //Funcion de registro de nuevo usuario + validacion + mensajes al usuario
@@ -118,7 +148,7 @@ function registerNewUser (usernameInput,passwordInput) {
 
 //mensajes nuevo usuario creado con exito
 function newUserSuccessMessage (usernameInput) {
-    loginMessageTxt = "El usuario "+usernameInput.value+" se creo con éxito. Ya puede logearse con su usuario y clave.",
+    loginMessageTxt = "El usuario "+usernameInput.value+" se creo con éxito. Ya puede logearse con su usuario y contraseña.",
     swal.fire({
         title: loginMessageTxt,
         icon: "success",
@@ -133,7 +163,7 @@ function newUserErrorMessage (newUserFound) {
         loginMessageTxt = "El usuario que usted intenta registrar ya existe por favor elija un nombre distinto"
     }
     else{
-        loginMessageTxt = "Debe ingresar un valor de username y password para completar el registro"
+        loginMessageTxt = "Debe ingresar un valor de usuario y contraseña para completar el registro"
     }
     swal.fire({
     title: loginMessageTxt,
@@ -154,9 +184,3 @@ function storeUsers (){
             users=JSON.parse(localStorage.getItem("users"))
         }
     }
-
-//funcion cambio de contraseña
-
-//funcion eliminar usuario
-
-//funcion logoff
