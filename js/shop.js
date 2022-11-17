@@ -14,12 +14,15 @@ let carrito = []
 //Cargar carrito si hay algo en el LocalStorage
 recoverFromLocalStorage()
 
+
 //DOM
 const contenedorServicios=document.getElementById("contenedorServicios")
 
 //Funcion para mostrar servicios en el DOM
 function mostrarServicios(serviceList) {
     serviceList.forEach((service)=>{
+        let priceService=service.price
+        let textPriceService=priceService.toLocaleString("es-AR", {style:"currency", currency:"ARS"})
         const card =document.createElement("div")
         card.classList.add("col-xl-3","col-md-6","col-xs-12")
         card.innerHTML=`
@@ -27,7 +30,7 @@ function mostrarServicios(serviceList) {
                 <img src= "${service.img}" class="card-img-top imgServices" alt="${service.name}">
                 <div class="card-body">
                 <h5 class="card-title"> ${service.name} </h5>
-                <p class="card-text"> ${service.price} </p>
+                <p class="card-text"> ${textPriceService} </p>
                 <button class="btn colorBoton" id="boton${service.id}">Agregar al Carrito</button>
                 </div>
             </div>
@@ -58,12 +61,12 @@ const agregarAlCarrito = (id) => {
                 saveToLocalStorage()
             }
             calcularTotal()
+            quantityNotification()
             mostrarCarrito()
     })
 }
 
 //Funcionalidad del boton "mostrarCarrito" con evento "click"
-const contenedorCarrito=document.getElementById("contenedorCarrito")
 const verCarrito=document.getElementById("verCarrito")
 verCarrito.addEventListener("click", ()=> {
     if (carrito.length===0){
@@ -75,43 +78,47 @@ verCarrito.addEventListener("click", ()=> {
 })
 
 //Funcion para mostrar carrito
+const contenedorCarrito=document.getElementById("contenedorCarrito")
 const mostrarCarrito=()=>{
     contenedorCarrito.innerHTML=""
     carrito.forEach((service)=>{
-        const card =document.createElement("div")
-        card.classList.add("col-xl-3","col-md-6","col-xs-12")
+        let priceService=service.price
+        let textPriceService=priceService.toLocaleString("es-AR", {style:"currency", currency:"ARS"})
+        let card =document.createElement("div")
+        card.classList.add("row")
         card.innerHTML = `
-            <div class="card">
-                <img src= "${service.img}" class="card-img-top imgServices" alt="${service.name}">
-                <div class="card-body">
-                    <h5 class="card-title"> ${service.name} </h5>
-                    <p class="card-text"> ${service.price} </p>
-                    <p class="card-text"> ${service.quantity} </p>
-                    <button class="btn colorBoton" id="eliminar${service.id}">Elimiar Servicio</button>
-                </div>
+            <div class="col-3 d-flex align-items-center p-2 border-bottom">
+                <img src="${service.img}" width="60"/>
+            </div>
+            <div class="col-2 d-flex align-items-center p-2 border-bottom">
+                ${service.name}
+            </div>
+            <div class="col-2 d-flex align-items-center justify-content-center p-2 border-bottom">
+                ${textPriceService}
+            </div>
+            <div class="col-1 d-flex align-items-center justify-content-center p-2 border-bottom">
+                ${service.quantity}
+            </div>
+            <div class="col-1 d-flex align-items-center justify-content-center p-2 border-bottom">
+                <a href="javascript:addQuantity(${service.id})">
+                    <i class="fa-solid fa-square-plus"></i>
+                </a>
+            </div>
+            <div class="col-1 d-flex align-items-center justify-content-center p-2 border-bottom">
+                <a href="javascript:reduceQuantity(${service.id})">
+                    <i class="fa-solid fa-square-minus"></i>
+                </a>
+            </div>
+            <div class="col-1 d-flex align-items-center justify-content-center p-2 border-bottom">
+                <a href="javascript:eliminarDelCarrito(${service.id})">
+                    <i class="fa-solid fa-xmark text-danger"></i>
+                </a>
             </div>
         `
         contenedorCarrito.appendChild(card)
-
-        //Funcionalidad del boton "Eliminar Servicio" con evento "click" / elimina el servicio seleccionado del carrito y resetea cantidad a 1
-        const boton=document.getElementById(`eliminar${service.id}`)
-        boton.addEventListener("click", ()=> {
-            service.quantity=1
-            eliminarDelCarrito (service.id)
-            saveToLocalStorage()
-            Toastify({
-                text:"Se eliminó el servicio del carrito",
-                duration:3000,
-                gravity:"top",
-                position:"center",
-                style:
-                {
-                    background: "linear-gradient(to right, #00b09b, #96c93d)",
-                }
-            }).showToast() 
-        })
     })
-    calcularTotal ()
+    quantityNotification()
+    calcularTotal()
 }       
 
 //Funcion para eliminar un servicio del carrito
@@ -120,7 +127,18 @@ const eliminarDelCarrito = (id) => {
     const indice = carrito.indexOf(service)
     carrito.splice(indice,1)
     mostrarCarrito()
+    service.quantity=1
     saveToLocalStorage()
+    Toastify({
+        text:"Se eliminó el servicio del carrito",
+        duration:3000,
+        gravity:"top",
+        position:"center",
+        style:
+        {
+            background: "linear-gradient(to right, #00b09b, #96c93d)",
+        }
+    }).showToast() 
 }
 
 //Funcionalidad del boton "Vaciar Carrito" con evento "click" vaciar todo el carrito de compras
@@ -157,16 +175,26 @@ const eliminarTodoElCarrito=()=>{
 //Mostrar el total de la compra a medida que se agregan servicios
 const total=document.getElementById("total")
 const calcularTotal = () => {
-    fetch(services)
-        .then(response => response.json())
-        .then(() => {
-            let totalCompra = 0
-            carrito.forEach((service)=>{
-            totalCompra += service.price * service.quantity
-            })  
-        total.innerHTML = `$${totalCompra}`
-        })
+    let totalCompra = 0
+    carrito.forEach((service)=>{
+    totalCompra += service.price * service.quantity
+    })  
+    let priceService=totalCompra
+    let textPriceService=priceService.toLocaleString("es-AR", {style:"currency", currency:"ARS"})
+    total.innerHTML = `${textPriceService}`
 }
+
+
+//Calcular la cantidad total de unidades en carrito para mostrar en la notificacion
+const totalQuantity=document.getElementById("quantityNotification")
+const quantityNotification = () => {
+    let quantityCart = 0
+    carrito.forEach((service)=>{
+        quantityCart += service.quantity
+    })  
+    totalQuantity.innerHTML = `${quantityCart}`
+}
+
 
 //Simulador concretar compra del carrito presionando boton "Comprar Carrito"
 const comprarCarrito = document.getElementById("comprarCarrito")
@@ -186,6 +214,23 @@ comprarCarrito.addEventListener("click", ()=> {
     }
 })
 
+
+//Boton del carrito para agregar una unidad del servicio
+function addQuantity (id) {
+    const quantityInCart = carrito.find((service) => service.id === id)
+    quantityInCart.quantity++
+    mostrarCarrito()
+    saveToLocalStorage()
+}
+
+//Boton del carrito para reducir una unidad del servicio
+function reduceQuantity (id) {
+    const quantityInCart = carrito.find((service) => service.id === id)
+    quantityInCart.quantity--
+    mostrarCarrito()
+    saveToLocalStorage()
+}
+
 //Recuperar del localStorage
 function recoverFromLocalStorage(){
     if (localStorage.getItem("carrito")) {
@@ -197,3 +242,7 @@ function recoverFromLocalStorage(){
 function saveToLocalStorage(){
 localStorage.setItem("carrito",JSON.stringify(carrito))
 }
+
+document.addEventListener("DOMContentLoaded", function() {
+    quantityNotification()
+})
