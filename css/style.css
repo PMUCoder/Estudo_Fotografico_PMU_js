@@ -457,22 +457,6 @@ header .styleItmesNav .itemActivo {
   align-items: center;
   margin: 0.5rem; }
 
-.colorBoton {
-  color: white;
-  background-color: #85bb65; }
-
-.colorBoton:hover {
-  color: white;
-  background-color: green; }
-
-.colorBotonBuy {
-  color: white;
-  background-color: #bb7d65; }
-
-.colorBotonBuy:hover {
-  color: white;
-  background-color: #c54d1e; }
-
 footer {
   display: flex;
   font-family: 'Roboto', sans-serif;

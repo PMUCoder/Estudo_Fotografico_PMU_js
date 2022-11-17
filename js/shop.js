@@ -29,9 +29,9 @@ function mostrarServicios(serviceList) {
             <div class="card">
                 <img src= "${service.img}" class="card-img-top imgServices" alt="${service.name}">
                 <div class="card-body">
-                <h5 class="card-title"> ${service.name} </h5>
-                <p class="card-text"> ${textPriceService} </p>
-                <button class="btn colorBoton" id="boton${service.id}">Agregar al Carrito</button>
+                    <h5 class="card-title"> ${service.name} </h5>
+                    <p class="card-text"> ${textPriceService} </p>
+                    <button class="btn btn-success" id="boton${service.id}">Agregar al Carrito</button>
                 </div>
             </div>
         `
@@ -226,9 +226,15 @@ function addQuantity (id) {
 //Boton del carrito para reducir una unidad del servicio
 function reduceQuantity (id) {
     const quantityInCart = carrito.find((service) => service.id === id)
-    quantityInCart.quantity--
-    mostrarCarrito()
-    saveToLocalStorage()
+        if (quantityInCart.quantity>1) { 
+            quantityInCart.quantity--
+            mostrarCarrito()
+            saveToLocalStorage()
+        }     
+        else{
+            eliminarDelCarrito (id)
+        }
+
 }
 
 //Recuperar del localStorage
