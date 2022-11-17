@@ -67,6 +67,16 @@ const agregarAlCarrito = (id) => {
             calcularTotal()
             quantityNotification()
             mostrarCarrito()
+            Toastify({
+                text:"Se agrego el servicio al carrito con éxito",
+                duration:3000,
+                gravity:"top",
+                position:"center",
+                style:
+                {
+                    background: "linear-gradient(to right, #000080, #8A2BE2)",
+                }
+            }).showToast()
     })
 }
 
@@ -140,7 +150,7 @@ const eliminarDelCarrito = (id) => {
         position:"center",
         style:
         {
-            background: "linear-gradient(to right, #00b09b, #96c93d)",
+            background: "linear-gradient(to right, #006400, #228B22)",
         }
     }).showToast() 
 }
@@ -160,7 +170,7 @@ vaciarCarrito.addEventListener("click", ()=> {
             position:"center",
             style:
             {
-                background: "linear-gradient(to right, #00b09b, #96c93d)",
+                background: "linear-gradient(to right, #006400, #228B22)",
             }
         }).showToast()
     }
