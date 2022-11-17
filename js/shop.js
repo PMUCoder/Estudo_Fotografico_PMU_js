@@ -14,8 +14,12 @@ let carrito = []
 //Cargar carrito si hay algo en el LocalStorage
 recoverFromLocalStorage()
 
+//Activo el EventListener por si quedo algun item en el carrito que la notificacion se actualice
+document.addEventListener("DOMContentLoaded", function() {
+    quantityNotification()
+})
 
-//DOM
+//DOM identificar el div donde van los servicios a la venta
 const contenedorServicios=document.getElementById("contenedorServicios")
 
 //Funcion para mostrar servicios en el DOM
@@ -66,7 +70,7 @@ const agregarAlCarrito = (id) => {
     })
 }
 
-//Funcionalidad del boton "mostrarCarrito" con evento "click"
+//EventListener del boton "mostrarCarrito" con evento "click"
 const verCarrito=document.getElementById("verCarrito")
 verCarrito.addEventListener("click", ()=> {
     if (carrito.length===0){
@@ -121,7 +125,7 @@ const mostrarCarrito=()=>{
     calcularTotal()
 }       
 
-//Funcion para eliminar un servicio del carrito
+//Funcion para eliminar un servicio puntual del carrito
 const eliminarDelCarrito = (id) => {
     const service = carrito.find((service) => service.id === id)
     const indice = carrito.indexOf(service)
@@ -141,7 +145,7 @@ const eliminarDelCarrito = (id) => {
     }).showToast() 
 }
 
-//Funcionalidad del boton "Vaciar Carrito" con evento "click" vaciar todo el carrito de compras
+//EventListener del boton "Vaciar Carrito" con evento "click" para vaciar todo el carrito de compras
 const vaciarCarrito = document.getElementById("vaciarCarrito")
 vaciarCarrito.addEventListener("click", ()=> {
     if (carrito.length===0){
@@ -172,7 +176,7 @@ const eliminarTodoElCarrito=()=>{
     })
 }
 
-//Mostrar el total de la compra a medida que se agregan servicios
+//Calcula y muestra el total de la compra a medida que se agregan servicios
 const total=document.getElementById("total")
 const calcularTotal = () => {
     let totalCompra = 0
@@ -185,7 +189,7 @@ const calcularTotal = () => {
 }
 
 
-//Calcular la cantidad total de unidades en carrito para mostrar en la notificacion
+//Calcula la cantidad total de unidades en carrito para mostrar en el badge de notificacion
 const totalQuantity=document.getElementById("quantityNotification")
 const quantityNotification = () => {
     let quantityCart = 0
@@ -196,7 +200,7 @@ const quantityNotification = () => {
 }
 
 
-//Simulador concretar compra del carrito presionando boton "Comprar Carrito"
+//Simulador para concretar compra del carrito presionando boton "Comprar Carrito"
 const comprarCarrito = document.getElementById("comprarCarrito")
 comprarCarrito.addEventListener("click", ()=> {
     if (carrito.length===0){
@@ -214,8 +218,7 @@ comprarCarrito.addEventListener("click", ()=> {
     }
 })
 
-
-//Boton del carrito para agregar una unidad del servicio
+//Boton "+" del carrito para agregar una unidad del servicio
 function addQuantity (id) {
     const quantityInCart = carrito.find((service) => service.id === id)
     quantityInCart.quantity++
@@ -223,7 +226,7 @@ function addQuantity (id) {
     saveToLocalStorage()
 }
 
-//Boton del carrito para reducir una unidad del servicio
+//Boton "-" del carrito para reducir una unidad del servicio hasta el limite de 1 (al siguiente click lo elimina)
 function reduceQuantity (id) {
     const quantityInCart = carrito.find((service) => service.id === id)
         if (quantityInCart.quantity>1) { 
@@ -237,18 +240,15 @@ function reduceQuantity (id) {
 
 }
 
-//Recuperar del localStorage
+//Recuperar carrito del localStorage
 function recoverFromLocalStorage(){
     if (localStorage.getItem("carrito")) {
         carrito=JSON.parse(localStorage.getItem("carrito"))
     }
 }
 
-//Guardar en localStorage
+//Guardar carrito en localStorage
 function saveToLocalStorage(){
 localStorage.setItem("carrito",JSON.stringify(carrito))
 }
 
-document.addEventListener("DOMContentLoaded", function() {
-    quantityNotification()
-})
