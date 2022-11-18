@@ -35,6 +35,7 @@ btnLogin.addEventListener("click", ()=>{
                 icon: "success",
                 confirmButtonText: "Aceptar",
             })
+            loginMessage.innerText= "Ok"
             storeUsers ()
         })
     }
