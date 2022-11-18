@@ -68,7 +68,7 @@ const agregarAlCarrito = (id) => {
             quantityNotification()
             mostrarCarrito()
             Toastify({
-                text:"Se agrego el servicio al carrito con éxito",
+                text:"Se agregó el servicio al carrito con éxito",
                 duration:3000,
                 gravity:"top",
                 position:"center",
@@ -84,7 +84,7 @@ const agregarAlCarrito = (id) => {
 const verCarrito=document.getElementById("verCarrito")
 verCarrito.addEventListener("click", ()=> {
     if (carrito.length===0){
-        Swal.fire('El carrito esta vacio, seleccione al menos un Servicio')
+        Swal.fire('El carrito esta vacío, seleccione al menos un servicio')
     }
     else{
         mostrarCarrito()
@@ -159,7 +159,7 @@ const eliminarDelCarrito = (id) => {
 const vaciarCarrito = document.getElementById("vaciarCarrito")
 vaciarCarrito.addEventListener("click", ()=> {
     if (carrito.length===0){
-        Swal.fire('El carrito ya se encuentra vacio')
+        Swal.fire('El carrito ya se encuentra vacío')
     }
     else{
         eliminarTodoElCarrito()
@@ -212,13 +212,13 @@ const quantityNotification = () => {
 const comprarCarrito = document.getElementById("comprarCarrito")
 comprarCarrito.addEventListener("click", ()=> {
     if (carrito.length===0){
-        Swal.fire('El carrito esta vacio, seleccione al menos un Servicio')
+        Swal.fire('El carrito esta vacío, seleccione al menos un servicio')
     }
     else{
         Swal.fire({
             position: 'center',
             icon: 'success',
-            title: 'Felicidades, la operacion de compra ha sido exitosa',
+            title: 'Felicidades, la operación de compra ha sido exitosa',
             showConfirmButton: false,
             timer: 3000
         })

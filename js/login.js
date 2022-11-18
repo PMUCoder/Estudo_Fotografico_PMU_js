@@ -79,7 +79,7 @@ function successMessage (usernameInput) {
         icon: "success",
         confirmButtonText: "Aceptar",
     })
-    loginMessage.innerText= "El usuario "+usernameInput.value+" se logeo con éxito"
+    loginMessage.innerText= "El usuario "+usernameInput.value+" se logueo con éxito"
     loginAttempts=1
 }
 
