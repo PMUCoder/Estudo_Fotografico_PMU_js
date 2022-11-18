@@ -91,7 +91,7 @@ verCarrito.addEventListener("click", ()=> {
     }
 })
 
-//Funcion para mostrar carrito
+//Agrega los items HTML al offcanvas del carrito
 const contenedorCarrito=document.getElementById("contenedorCarrito")
 const mostrarCarrito=()=>{
     contenedorCarrito.innerHTML=""
@@ -234,7 +234,7 @@ function addQuantity (id) {
     saveToLocalStorage()
 }
 
-//Boton "-" del carrito para reducir una unidad del servicio hasta el limite de 1 (al siguiente click lo elimina)
+//Boton "-" del carrito para reducir una unidad del servicio hasta el limite de 1 (al siguiente click lo elimina del carrito)
 function reduceQuantity (id) {
     const quantityInCart = carrito.find((service) => service.id === id)
         if (quantityInCart.quantity>1) { 

@@ -72,7 +72,7 @@ function userLogin (usernameInput,passwordInput) {
     }
 }
 
-//mensajes usuario login con exito
+//mensajes al usuario login con exito
 function successMessage (usernameInput) {
     swal.fire({
         title: "Bienvenido " +usernameInput.value,
@@ -83,13 +83,13 @@ function successMessage (usernameInput) {
     loginAttempts=1
 }
 
-//mensajes usuario login con exito
+//mensajes al usuario login con error
 function errorMessage () {
     if(loginAttempts >= loginAttemptsLimit){
-        loginMessageTxt = "Alcanzó el número máximo de intentos su usuario ha sigo bloqueado, por favor contactese con nuestro centro de ayuda"
+        loginMessageTxt = "Alcanzó el número máximo de intentos su usuario ha sido bloqueado, por favor contáctese con nuestro centro de ayuda"
     }
     else{
-        loginMessageTxt = "Los datos ingresados son incorrectos, revise usuario y contraseña e intentelo nuevamente."+"\n"+"Recuerde que luego de 3 intentos su usuario sera bloqueado por seguridad."+"\n"+"Le "+(loginAttempts>1 ? ("queda ") : ("quedan "))+parseInt(loginAttemptsLimit-loginAttempts)+ (loginAttempts>1 ? (" intento.") : (" intentos."))
+        loginMessageTxt = "Los datos ingresados son incorrectos, revise usuario y contraseña e inténtelo nuevamente."+"\n"+"Recuerde que luego de 3 intentos su usuario será bloqueado por seguridad."+"\n"+"Le "+(loginAttempts>1 ? ("queda ") : ("quedan "))+parseInt(loginAttemptsLimit-loginAttempts)+ (loginAttempts>1 ? (" intento.") : (" intentos."))
     }
     swal.fire({
     title: loginMessageTxt,
@@ -99,7 +99,7 @@ function errorMessage () {
     loginMessage.innerText= loginMessageTxt
 }
 
-//Create user
+//Creación de un nuevo usuario
 btnNewUser.addEventListener("click", ()=>{
     let userLogged = users.find(user=>user.login_status===true)
     if (userLogged) {
@@ -150,7 +150,7 @@ function registerNewUser (usernameInput,passwordInput) {
 
 //mensajes nuevo usuario creado con exito
 function newUserSuccessMessage (usernameInput) {
-    loginMessageTxt = "El usuario "+usernameInput.value+" se creo con éxito. Ya puede logearse con su usuario y contraseña.",
+    loginMessageTxt = "El usuario "+usernameInput.value+" se creo con éxito. Ya puede loguearse con su usuario y contraseña.",
     swal.fire({
         title: loginMessageTxt,
         icon: "success",
