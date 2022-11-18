@@ -22,12 +22,13 @@ storeUsers ()
 let loginAttempts=1
 let loginAttemptsLimit=3
 
-//login
+//login-logoff
 btnLogin.addEventListener("click", ()=>{
     let userLogged = users.find(user=>user.login_status===true)
     if (userLogged) {
         users.forEach((user)=>{
             user.login_status=false
+            loginWelcome.innerText= ""  
             btnLogin.innerText= "Login"
             swal.fire({
                 title: "El logoff fue exitoso. Hasta la próxima",
@@ -63,6 +64,7 @@ function userLogin (usernameInput,passwordInput) {
         storeUsers ()
         successMessage (usernameInput)
         btnLogin.innerText= "Logoff"
+        loginWelcome.innerText= "Hola, "+usernameInput.value
     }
     else{
         errorMessage ()

@@ -198,7 +198,6 @@ const calcularTotal = () => {
     total.innerHTML = `${textPriceService}`
 }
 
-
 //Calcula la cantidad total de unidades en carrito para mostrar en el badge de notificacion
 const totalQuantity=document.getElementById("quantityNotification")
 const quantityNotification = () => {
@@ -208,7 +207,6 @@ const quantityNotification = () => {
     })  
     totalQuantity.innerHTML = `${quantityCart}`
 }
-
 
 //Simulador para concretar compra del carrito presionando boton "Comprar Carrito"
 const comprarCarrito = document.getElementById("comprarCarrito")
@@ -261,4 +259,3 @@ function recoverFromLocalStorage(){
 function saveToLocalStorage(){
 localStorage.setItem("carrito",JSON.stringify(carrito))
 }
-
